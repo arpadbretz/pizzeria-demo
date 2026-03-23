@@ -1,20 +1,21 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-cream: #FFF8F0;
-  --color-cream-dark: #F5EDE3;
-  --color-parchment: #F0E6D6;
-  --color-charcoal: #2C2C2C;
-  --color-charcoal-light: #3D3D3D;
-  --color-tomato: #C0392B;
-  --color-tomato-dark: #962D22;
-  --color-tomato-light: #E74C3C;
-  --color-olive: #6B7B3A;
-  --color-olive-light: #8FA34B;
-  --color-gold: #D4A017;
-  --color-gold-light: #E8B82F;
-  --color-wood: #8B6914;
-  --color-wood-dark: #5C4A1C;
+  --color-night: #0C0A09;
+  --color-night-light: #1A1714;
+  --color-night-medium: #262220;
+  --color-warm: #F5E6D3;
+  --color-warm-dark: #E8D5BD;
+  --color-warm-muted: #BFA98A;
+  --color-ember: #D44A1A;
+  --color-ember-dark: #B33A10;
+  --color-ember-light: #E8633A;
+  --color-ember-glow: rgba(212, 74, 26, 0.15);
+  --color-gold: #C9A96E;
+  --color-gold-light: #DFC18A;
+  --color-gold-muted: #8A7750;
+  --color-sage: #7A8B6F;
+  --color-sage-light: #9CAB8F;
   --font-sans: var(--font-inter);
   --font-display: var(--font-playfair);
 }
@@ -24,85 +25,102 @@ html {
 }
 
 ::selection {
-  background-color: rgba(192, 57, 43, 0.3);
-  color: #2C2C2C;
+  background-color: rgba(212, 74, 26, 0.4);
+  color: #F5E6D3;
 }
 
 body {
-  background: var(--color-cream);
-  color: var(--color-charcoal);
+  background: var(--color-night);
+  color: var(--color-warm);
   font-family: var(--font-sans);
   overflow-x: hidden;
 }
 
-/* Grain texture overlay */
+/* Film grain overlay */
 .grain-overlay::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 100;
   pointer-events: none;
-  opacity: 0.04;
+  opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
 }
 
-/* Decorative divider */
-.italian-divider {
+/* Horizontal rule with dot */
+.hr-dot {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.italian-divider::before,
-.italian-divider::after {
+.hr-dot::before,
+.hr-dot::after {
   content: "";
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(192, 57, 43, 0.3), transparent);
+  background: linear-gradient(90deg, transparent, var(--color-gold-muted), transparent);
 }
 
-/* Handwritten style underline */
-.hand-underline {
-  position: relative;
-  display: inline-block;
-}
-
-.hand-underline::after {
-  content: "";
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: var(--color-tomato);
-  border-radius: 2px;
-  transform: rotate(-1deg);
-}
-
-/* Menu item price dots */
+/* Menu price leader dots */
 .price-dots {
   flex: 1;
-  border-bottom: 2px dotted rgba(44, 44, 44, 0.2);
+  border-bottom: 1px dotted rgba(201, 169, 110, 0.25);
   margin: 0 0.75rem;
   min-width: 2rem;
   align-self: flex-end;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
 }
 
-/* Scrollbar styling */
+/* Horizontal marquee */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee {
+  animation: marquee 40s linear infinite;
+}
+
+/* Glow pulse */
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+.glow-pulse {
+  animation: glow-pulse 4s ease-in-out infinite;
+}
+
+/* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-cream);
+  background: var(--color-night);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(192, 57, 43, 0.3);
-  border-radius: 4px;
+  background: rgba(201, 169, 110, 0.2);
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(192, 57, 43, 0.5);
+  background: rgba(201, 169, 110, 0.4);
+}
+
+/* Image reveal mask */
+@keyframes reveal-mask {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0% 0 0); }
+}
+
+.reveal-mask {
+  animation: reveal-mask 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+}
+
+/* Counter number font feature */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
 }
